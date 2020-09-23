@@ -91,12 +91,13 @@ guidesForm.addEventListener("submit", (e) => {
 // auth status
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    // User is signed in.
-    // getting data from firestore
+    user.getIdTokenResult().then((idToeknResult) => {
+      user.admin = idToeknResult.claims.admin;
+      setupUI(user);
+    });
     db.collection("guides").onSnapshot(
       (querySnapshot) => {
         setupGuides(querySnapshot.docs);
-        setupUI(user);
         displayUSer(user);
       },
       (error) => {

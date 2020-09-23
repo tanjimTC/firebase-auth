@@ -35,9 +35,15 @@ const setupGuides = (data) => {
 
 const loggedinLinks = document.querySelectorAll(".logged-in");
 const loggedoutLinks = document.querySelectorAll(".logged-out");
+const adminLinks = document.querySelectorAll(".admin");
 
 const setupUI = (user) => {
   if (user) {
+    if (user.admin) {
+      adminLinks.forEach((element) => {
+        element.style.display = "block";
+      });
+    }
     loggedinLinks.forEach((element) => {
       element.style.display = "block";
     });
@@ -50,6 +56,9 @@ const setupUI = (user) => {
     });
     loggedoutLinks.forEach((element) => {
       element.style.display = "block";
+    });
+    adminLinks.forEach((element) => {
+      element.style.display = "none";
     });
   }
 };
@@ -65,6 +74,8 @@ const displayUSer = async (user) => {
     <div>You are logged in as ${user.email}</div>
     <div>Your user id is ${user.uid}</div>
     <div>Bio : ${bio.data().bio}</div>
+    <div class="pink-text"> ${user.admin ? "Admin" : ""}</div>
+
   `;
     accountDetails.innerHTML = details;
   }
